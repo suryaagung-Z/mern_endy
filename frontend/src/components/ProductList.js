@@ -31,9 +31,17 @@ const ProductList = () => {
 
   return (
     <div className="container mt-5">
-      <Link to="/add" className="button is-success">
-        Add New
-      </Link>
+      <div className="columns">
+        <div className="column">
+          <h1 className="title">Product List</h1>
+        </div>
+        <div className="column is-narrow">
+          <Link to="/add" className="button is-success ml-auto">
+            Add New
+          </Link>
+        </div>
+      </div>
+
       <div className="columns is-multiline mt-2">
         {products.map((product) => (
           <div className="column is-one-quarter" key={product.id}>
@@ -52,12 +60,13 @@ const ProductList = () => {
               </div>
 
               <footer className="card-footer">
-                <Link to={`edit/${product.id}`} className="card-footer-item" key={`edit-${product.id}`}>
+                <Link to={`edit/${product.id}`} className="card-footer-item button is-info"
+                 key={`edit-${product.id}`}>
                   Edit
                 </Link>
                 <button
                   onClick={() => deleteProduct(product.id)}
-                  className="card-footer-item"
+                  className="card-footer-item button is-danger"
                   type="button"
                   key={`delete-${product.id}`}
                 >
