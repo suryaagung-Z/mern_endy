@@ -24,9 +24,14 @@ const AddProduct = () => {
         headers: {
           "Content-type": "multipart/form-data",
         },
+        withCredentials: true,
       });
       navigate("/");
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/sign-in");
+        return;
+      }
       console.log(error);
     }
   };

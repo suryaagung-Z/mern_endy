@@ -14,10 +14,19 @@ const EditProduct = () => {
   }, []);
 
   const getProductById = async () => {
-    const response = await axios.get(`http://localhost:3000/products/${id}`);
-    setTitle(response.data.name);
-    setFile(response.data.image);
-    setPreview(response.data.url);
+    try {
+      const response = await axios.get(`http://localhost:3000/products/${id}`, {
+        withCredentials: true,
+      });
+      setTitle(response.data.name);
+      setFile(response.data.image);
+      setPreview(response.data.url);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/sign-in");
+        return;
+      }
+    }
   };
 
   const loadImage = (e) => {
@@ -36,9 +45,14 @@ const EditProduct = () => {
         headers: {
           "Content-type": "multipart/form-data",
         },
+        withCredentials: true,
       });
       navigate("/");
     } catch (error) {
+      if (error.response.status === 401) {
+        navigate("/sign-in");
+        return;
+      }
       console.log(error);
     }
   };
